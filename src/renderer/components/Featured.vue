@@ -9,6 +9,9 @@
     <h2 class="subtitle" :style="{ 'color': fontColor }">
       {{ message.subtitle || '---' }}
     </h2>
+    <h2 class="subtitle" :style="{ 'color': fontColor, 'font-weight': 'bold' }">
+      {{ message.$data.nomeCliente || '---' }}
+    </h2>
   </div>
 </template>
 

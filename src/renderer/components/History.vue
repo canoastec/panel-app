@@ -5,15 +5,12 @@
         {{ 'history.empty'|trans }}
       </p>
     </div>
-    <div v-for="message in messages" class="message" :key="message.id">
-      <span class="title" v-if="showMessageTitle" :style="{ 'color': fontColor(message) }">
-        {{ message.title }}
+    <div v-for="message in messages" :key="message.id" class="message">
+      <span v-if="showMessageTitle" class="title" :style="{ color: fontColor(message) }">
+        {{ getTitle(message) }}
       </span>
-      <span class="subtitle" v-if="showMessageSubtitle" :style="{ 'color': fontColor(message) }">
-        {{ message.subtitle }}
-      </span>
-      <span class="description" v-if="showMessageDescription" :style="{ 'color': fontColor(message) }">
-        {{ message.description }}
+      <span v-if="showMessageSubtitle" class="subtitle" :style="{ color: fontColor(message) }">
+        {{ getSubtitle(message) }}
       </span>
     </div>
   </div>
@@ -51,6 +48,17 @@ export default {
     fontColor (message) {
       const peso = message.$data ? message.$data.peso : 0
       return peso > 0 ? this.fontColorPriority : this.fontColorNormal
+    },
+    getTitle (message) {
+      return message.$data && message.$data.nomeCliente
+        ? message.$data.nomeCliente.split(' ')[0]
+        : message.title
+    },
+    getSubtitle (message) {
+      if (message.$data && message.$data.nomeCliente) {
+        return `${message.subtitle} - ${message.title}`
+      }
+      return message.subtitle
     }
   }
 }
